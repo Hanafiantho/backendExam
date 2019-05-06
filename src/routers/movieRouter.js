@@ -40,7 +40,19 @@ router.delete('/deleteMovies/:moviesId', (req, res) => {
 })
 
 // Edit Movies
-router.patch('/update')
+router.patch('/updateMovies/:moviesId', (req, res) => {
+    const data = [req.body, req.params.moviesId]
+    const sqlQuery = 'UPDATE movies SET ? WHERE id = ?;'
+
+    conn.query(sqlQuery, data, (err, result) => {
+        if(err) {
+            return res.send(err.sqlMessage)
+        }
+
+        res.send(result)
+        console.log('Data successfully edited')
+    })
+})
 
 // Show All Movies
 router.get('/showMovies', (req, res) => {
