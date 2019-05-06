@@ -24,6 +24,21 @@ router.post('/addMovies', (req, res) => {
     })
 })
 
+// Edit Movies
+router.patch('/editMovies/:moviesId', (req, res) => {
+    const data = [req.body, req.params.moviesId]
+    const sqlQuery = 'UPDATE movies SET ? WHERE id = ?;'
+
+    conn.query(sqlQuery, data, (err, result) => {
+        if(err) {
+            return res.send(err.sqlMessage)
+        }
+
+        res.send(result)
+        console.log('Data successfully edited')
+    })
+})
+
 // Delete Movies
 router.delete('/deleteMovies/:moviesId', (req, res) => {
     const data = req.params.moviesId
@@ -36,21 +51,6 @@ router.delete('/deleteMovies/:moviesId', (req, res) => {
 
         res.send(result)
         console.log('Data successfully deleted')
-    })
-})
-
-// Edit Movies
-router.patch('/updateMovies/:moviesId', (req, res) => {
-    const data = [req.body, req.params.moviesId]
-    const sqlQuery = 'UPDATE movies SET ? WHERE id = ?;'
-
-    conn.query(sqlQuery, data, (err, result) => {
-        if(err) {
-            return res.send(err.sqlMessage)
-        }
-
-        res.send(result)
-        console.log('Data successfully edited')
     })
 })
 

@@ -24,6 +24,21 @@ router.post('/addCategories', (req, res) => {
     })
 })
 
+// Edit Categories
+router.patch('/editCategories/:categorieId', (req, res) => {
+    const data = [req.body, req.params.categorieId]
+    const sqlQuery = 'UPDATE categories SET ? WHERE id = ?;'
+
+    conn.query(sqlQuery, data, (err, result) => {
+        if(err) {
+            return res.send(err.sqlMessage)
+        }
+
+        res.send(result)
+        console.log('Data successfully edited')
+    })
+})
+
 // Delete Categories
 router.delete('/deleteCategories/:categorieId', (req, res) => {
     const data = req.params.categorieId
